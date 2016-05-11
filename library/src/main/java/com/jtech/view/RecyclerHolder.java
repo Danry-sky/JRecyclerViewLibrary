@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ public class RecyclerHolder extends RecyclerView.ViewHolder {
      * 通过控件的Id获取对于的控件，如果没有则加入views
      *
      * @param viewId
+     * @param <T>
      * @return
      */
     @SuppressWarnings("unchecked")
@@ -39,13 +41,24 @@ public class RecyclerHolder extends RecyclerView.ViewHolder {
     }
 
     /**
+     * 获取imageview
+     *
+     * @param viewId
+     * @param <T>
+     * @return
+     */
+    public <T extends ImageView> T getImageView(int viewId) {
+        return getView(viewId);
+    }
+
+    /**
      * 为TextView设置字符串
      *
      * @param viewId
      * @param text
      * @return
      */
-    public RecyclerHolder setText(int viewId, String text) {
+    public RecyclerHolder setText(int viewId, CharSequence text) {
         TextView view = getView(viewId);
         view.setText(text);
         return this;
@@ -74,7 +87,6 @@ public class RecyclerHolder extends RecyclerView.ViewHolder {
     public RecyclerHolder setImageResource(int viewId, int drawableId) {
         ImageView view = getView(viewId);
         view.setImageResource(drawableId);
-
         return this;
     }
 
