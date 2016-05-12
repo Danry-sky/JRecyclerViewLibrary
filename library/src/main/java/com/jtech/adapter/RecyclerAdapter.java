@@ -233,11 +233,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerHo
 
     @Override
     public void onBindViewHolder(RecyclerHolder holder, int position) {
-        if (null == realDatas || position >= realDatas.size()) {
-            convert(holder, null, position);
-        } else {
-            convert(holder, realDatas.get(position), position);
-        }
+        convert(holder, getItem(position), position);
     }
 
     /**
