@@ -18,7 +18,10 @@ import com.jtech.view.RecyclerHolder;
 import com.jtech.view.RefreshLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class TestActivity extends AppCompatActivity implements OnItemClickListener, OnItemLongClickListener, RefreshLayout.OnRefreshListener, OnLoadListener, OnItemViewSwipeListener, OnItemViewMoveListener {
 
@@ -51,6 +54,13 @@ public class TestActivity extends AppCompatActivity implements OnItemClickListen
         jRecyclerView.setOnItemLongClickListener(this);
         //主动发起下拉刷新
         refreshLayout.startRefreshing();
+
+        Map<String, String> map = new HashMap<>();
+        Iterator iterator = map.keySet().iterator();
+        while (iterator.hasNext()) {
+            String key = (String) iterator.next();
+            String value = map.get(key);
+        }
     }
 
     /**

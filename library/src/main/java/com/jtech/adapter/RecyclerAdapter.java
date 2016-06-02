@@ -54,6 +54,8 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerHo
      */
     public RecyclerAdapter(Activity activity) {
         this.activity = activity;
+        //new一个空对象
+        realDatas = new ArrayList<>();
     }
 
     /**
