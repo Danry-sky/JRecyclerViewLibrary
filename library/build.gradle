@@ -1,13 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group='com.github.WuXuBaiYang'
+group = 'com.github.WuXuBaiYang'
 
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 9
         targetSdkVersion 23
         versionCode 1
         versionName '1.0'
