@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
@@ -37,7 +38,7 @@ public class TestActivity extends AppCompatActivity implements OnItemClickListen
         jRecyclerView = (JRecyclerView) findViewById(R.id.jrecyclerview);
         refreshLayout = (RefreshLayout) findViewById(R.id.refreshlayout);
         //设置layoutmanager
-        jRecyclerView.setLayoutManager(new GridLayoutManager(TestActivity.this, 3));
+        jRecyclerView.setLayoutManager(new LinearLayoutManager(TestActivity.this));
         //设置适配器
         testAdapter = new TestAdapter(TestActivity.this);
         jRecyclerView.setAdapter(testAdapter);
@@ -46,7 +47,7 @@ public class TestActivity extends AppCompatActivity implements OnItemClickListen
         //开启滑动删除(默认状态，可以手动设置)
         jRecyclerView.setSwipeStart(true, this);
         //开启长点击拖动换位(默认状态，可以手动设置)
-        jRecyclerView.setMoveUpDown(true, this);
+        jRecyclerView.setMoveFree(true, this);
         //设置事件
         jRecyclerView.setOnLoadListener(this);
         refreshLayout.setOnRefreshListener(this);
@@ -54,13 +55,6 @@ public class TestActivity extends AppCompatActivity implements OnItemClickListen
         jRecyclerView.setOnItemLongClickListener(this);
         //主动发起下拉刷新
         refreshLayout.startRefreshing();
-
-        Map<String, String> map = new HashMap<>();
-        Iterator iterator = map.keySet().iterator();
-        while (iterator.hasNext()) {
-            String key = (String) iterator.next();
-            String value = map.get(key);
-        }
     }
 
     /**
