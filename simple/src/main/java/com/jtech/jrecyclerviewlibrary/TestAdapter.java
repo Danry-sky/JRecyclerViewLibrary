@@ -2,6 +2,7 @@ package com.jtech.jrecyclerviewlibrary;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.jtech.adapter.RecyclerAdapter;
@@ -17,8 +18,8 @@ public class TestAdapter extends RecyclerAdapter<String> {
     }
 
     @Override
-    public RecyclerHolder createHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
-        return new RecyclerHolder(inflater.inflate(R.layout.view_item_test, parent, false));
+    protected View createView(LayoutInflater layoutInflater, ViewGroup viewGroup, int viewType) {
+        return layoutInflater.inflate(R.layout.view_item_test, viewGroup, false);
     }
 
     @Override
