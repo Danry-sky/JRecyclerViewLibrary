@@ -2,10 +2,7 @@ package com.jtech.jrecyclerviewlibrary;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import com.jtech.adapter.RecyclerAdapter;
 import com.jtech.view.RecyclerHolder;
@@ -20,12 +17,12 @@ public class TestAdapter extends RecyclerAdapter<String> {
     }
 
     @Override
-    public View createView(LayoutInflater inflater, ViewGroup parent, int viewType) {
-        return inflater.inflate(R.layout.view_item_test, parent, false);
+    public RecyclerHolder createHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        return new RecyclerHolder(inflater.inflate(R.layout.view_item_test, parent, false));
     }
 
     @Override
-    public void convert(RecyclerHolder holder, String item, int position) {
-        holder.setText(R.id.textview, item);
+    protected void convert(RecyclerHolder holder, String model, int position) {
+        holder.setText(R.id.textview, model);
     }
 }
