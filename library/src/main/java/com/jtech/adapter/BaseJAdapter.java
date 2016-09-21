@@ -264,13 +264,13 @@ public abstract class BaseJAdapter<VH extends RecyclerHolder, D> extends Recycle
     public void setDatas(Collection<D> datas, boolean loadMore) {
         if (loadMore) {
             if (null != datas && null != realDatas) {
-                realDatas.addAll(datas);
+                addDatas(datas);
             }
         } else {
             realDatas = new ArrayList<>(datas);
+            notifyDataSetChanged();
         }
         setpage(loadMore);
-        notifyDataSetChanged();
     }
 
     /**
@@ -291,7 +291,7 @@ public abstract class BaseJAdapter<VH extends RecyclerHolder, D> extends Recycle
     public void addDatas(int index, Collection<D> datas) {
         if (null != datas && null != realDatas) {
             realDatas.addAll(index, datas);
-            notifyDataSetChanged();
+            notifyItemRangeInserted(index, datas.size());
         }
     }
 
