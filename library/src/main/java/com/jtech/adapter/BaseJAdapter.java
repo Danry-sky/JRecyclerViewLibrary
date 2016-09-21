@@ -263,9 +263,7 @@ public abstract class BaseJAdapter<VH extends RecyclerHolder, D> extends Recycle
      */
     public void setDatas(Collection<D> datas, boolean loadMore) {
         if (loadMore) {
-            if (null != datas && null != realDatas) {
-                addDatas(datas);
-            }
+            addDatas(datas);
         } else {
             realDatas = new ArrayList<>(datas);
             notifyDataSetChanged();
@@ -279,7 +277,7 @@ public abstract class BaseJAdapter<VH extends RecyclerHolder, D> extends Recycle
      * @param datas 数据
      */
     public void addDatas(Collection<D> datas) {
-        addDatas(datas.size(), datas);
+        addDatas(getItemCount(), datas);
     }
 
     /**
@@ -303,7 +301,7 @@ public abstract class BaseJAdapter<VH extends RecyclerHolder, D> extends Recycle
      */
     public void addData(D data) {
         if (null != data && null != realDatas) {
-            addData(realDatas.size(), data);
+            addData(getItemCount(), data);
         }
     }
 
