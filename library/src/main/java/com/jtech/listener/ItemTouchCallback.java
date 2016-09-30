@@ -1,11 +1,10 @@
 package com.jtech.listener;
 
+import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
 import com.jtech.adapter.LoadMoreAdapter;
-import com.jtech.listener.OnItemViewMoveListener;
-import com.jtech.listener.OnItemViewSwipeListener;
 
 /**
  * 自定义滑动删除以及拖动换位
@@ -79,5 +78,25 @@ public class ItemTouchCallback extends ItemTouchHelper.Callback {
     @Override
     public boolean isLongPressDragEnabled() {
         return isLongPressDragEnabled;
+    }
+
+    @Override
+    public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+        super.clearView(recyclerView, viewHolder);
+    }
+
+    @Override
+    public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+        super.onSelectedChanged(viewHolder, actionState);
+    }
+
+    @Override
+    public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+    }
+
+    @Override
+    public void onChildDrawOver(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+        super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }
 }
