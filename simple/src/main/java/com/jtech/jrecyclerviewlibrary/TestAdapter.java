@@ -25,9 +25,9 @@ public class TestAdapter extends RecyclerSwipeAdapter<String> {
      */
     @Override
     public void clearView(RecyclerHolder recyclerHolder) {
-        recyclerHolder.hideViewGone(R.id.imageview_android);
-        recyclerHolder.hideViewGone(R.id.imageview_delete);
-        recyclerHolder.getView(R.id.relativelayout).setBackgroundColor(Color.TRANSPARENT);
+//        recyclerHolder.hideViewGone(R.id.imageview_android);
+//        recyclerHolder.hideViewGone(R.id.imageview_delete);
+//        recyclerHolder.getView(R.id.relativelayout).setBackgroundColor(Color.TRANSPARENT);
     }
 
     /**
