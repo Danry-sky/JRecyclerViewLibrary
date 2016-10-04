@@ -99,7 +99,7 @@ public class ItemTouchCallback extends ItemTouchHelper.Callback {
         //调用清除方法
         getDefaultUIUtil().clearView(checkSwipeViewNotNull(recyclerSwipeAdapter.getSwipeView(recyclerHolder)));
         //重置方法
-        recyclerSwipeAdapter.resetView(recyclerHolder);
+        recyclerSwipeAdapter.clearView(recyclerHolder);
     }
 
     @Override
@@ -154,7 +154,7 @@ public class ItemTouchCallback extends ItemTouchHelper.Callback {
      */
     private View checkSwipeViewNotNull(View swipeView) {
         if (null == swipeView) {
-            throw new NullPointerException("swipeView不能为空啊大兄弟！");
+            throw new NullPointerException("swipeView could not be null,bro!");
         } else {
             return swipeView;
         }

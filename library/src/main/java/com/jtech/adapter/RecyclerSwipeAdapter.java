@@ -26,7 +26,7 @@ public abstract class RecyclerSwipeAdapter<D> extends RecyclerAdapter<D> {
      *
      * @param recyclerHolder
      */
-    public abstract void resetView(RecyclerHolder recyclerHolder);
+    public abstract void clearView(RecyclerHolder recyclerHolder);
 
     /**
      * 获取滑动视图

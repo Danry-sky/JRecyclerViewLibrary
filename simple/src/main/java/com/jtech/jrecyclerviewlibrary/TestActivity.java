@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ public class TestActivity extends Activity implements OnItemClickListener, OnIte
         //开启滑动到底部加载更多功能
         jRecyclerView.setLoadMore(true);
         //开启滑动删除(默认状态，可以手动设置)
-        jRecyclerView.setSwipeStart(true, this);
+        jRecyclerView.setSwipeFree(true, this);
         //开启长点击拖动换位(默认状态，可以手动设置)
         jRecyclerView.setMoveFree(true, this);
         //设置事件
@@ -137,6 +138,11 @@ public class TestActivity extends Activity implements OnItemClickListener, OnIte
     @Override
     public void onItemViewSwipe(RecyclerView.ViewHolder viewHolder, int direction) {
         testAdapter.removeData(viewHolder.getAdapterPosition());
+        if (direction == ItemTouchHelper.START) {
+            Toast.makeText(this, "Delete!", Toast.LENGTH_SHORT).show();
+        } else if (direction == ItemTouchHelper.END) {
+            Toast.makeText(this, "Android!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

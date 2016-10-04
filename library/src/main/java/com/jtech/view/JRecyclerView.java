@@ -217,6 +217,17 @@ public class JRecyclerView extends RecyclerView {
     }
 
     /**
+     * 自由滑动
+     *
+     * @param swipeEnabled
+     * @param onItemViewSwipeListener
+     */
+    public void setSwipeFree(boolean swipeEnabled, OnItemViewSwipeListener onItemViewSwipeListener) {
+        int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+        setSwipe(swipeEnabled, swipeFlags, onItemViewSwipeListener);
+    }
+
+    /**
      * 设置滑动删除
      *
      * @param swipeEnabled            滑动删除是否可用

@@ -30,4 +30,10 @@
         android:gravity="center"
         android:padding="25dp"
         android:text="Test" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignBottom="@id/textview"
+        android:background="@android:color/darker_gray" />
 </RelativeLayout>
