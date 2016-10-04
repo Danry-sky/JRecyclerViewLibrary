@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/JRecyclerViewLibrary.iml" filepath="$PROJECT_DIR$/JRecyclerViewLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JRecyclerviewLibrary.iml" filepath="$PROJECT_DIR$/JRecyclerviewLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/simple/simple.iml" filepath="$PROJECT_DIR$/simple/simple.iml" />
     </modules>

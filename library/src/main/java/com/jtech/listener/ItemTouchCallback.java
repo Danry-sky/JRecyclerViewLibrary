@@ -3,8 +3,11 @@ package com.jtech.listener;
 import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.View;
 
 import com.jtech.adapter.LoadMoreAdapter;
+import com.jtech.adapter.RecyclerSwipeAdapter;
+import com.jtech.view.RecyclerHolder;
 
 /**
  * 自定义滑动删除以及拖动换位
@@ -15,12 +18,17 @@ public class ItemTouchCallback extends ItemTouchHelper.Callback {
     private int dragFlags, swipeFlags;
 
     private LoadMoreAdapter loadMoreAdapter;
+    private RecyclerSwipeAdapter recyclerSwipeAdapter;
 
     private OnItemViewMoveListener onItemViewMoveListener;
     private OnItemViewSwipeListener onItemViewSwipeListener;
 
     public void setLoadMoreAdapter(LoadMoreAdapter loadMoreAdapter) {
         this.loadMoreAdapter = loadMoreAdapter;
+        //如果用户传入的适配器是recyclerswipeadapter，则获取
+        if (loadMoreAdapter.getOriginAdapter() instanceof RecyclerSwipeAdapter) {
+            this.recyclerSwipeAdapter = (RecyclerSwipeAdapter) loadMoreAdapter.getOriginAdapter();
+        }
     }
 
     public void setDragFlags(int dragFlags) {
@@ -82,21 +90,73 @@ public class ItemTouchCallback extends ItemTouchHelper.Callback {
 
     @Override
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-        super.clearView(recyclerView, viewHolder);
+        if (null == recyclerSwipeAdapter) {
+            super.clearView(recyclerView, viewHolder);
+            return;
+        }
+        //强转viewholder
+        RecyclerHolder recyclerHolder = (RecyclerHolder) viewHolder;
+        //调用清除方法
+        getDefaultUIUtil().clearView(checkSwipeViewNotNull(recyclerSwipeAdapter.getSwipeView(recyclerHolder)));
+        //重置方法
+        recyclerSwipeAdapter.resetView(recyclerHolder);
     }
 
     @Override
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
-        super.onSelectedChanged(viewHolder, actionState);
+        if (null == recyclerSwipeAdapter) {
+            super.onSelectedChanged(viewHolder, actionState);
+            return;
+        }
+        if (null != viewHolder) {
+            //设置选择方法
+            getDefaultUIUtil().onSelected(checkSwipeViewNotNull(recyclerSwipeAdapter.getSwipeView((RecyclerHolder) viewHolder)));
+        }
     }
 
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        if (null == recyclerSwipeAdapter) {
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            return;
+        }
+        //强转recyclerholder
+        RecyclerHolder recyclerHolder = (RecyclerHolder) viewHolder;
+        //绘制滑动视图
+        getDefaultUIUtil().onDraw(c, recyclerView, checkSwipeViewNotNull(recyclerSwipeAdapter.getSwipeView(recyclerHolder)), dX, dY, actionState, isCurrentlyActive);
+        //调用绘制监听
+        int direction = 0;
+        if (dX > 0) {
+            direction = ItemTouchHelper.START;
+            recyclerSwipeAdapter.onSwipeStart(recyclerHolder, dX);
+        } else if (dX < 0) {
+            direction = ItemTouchHelper.END;
+            recyclerSwipeAdapter.onSwipeEnd(recyclerHolder, dX);
+        }
+        recyclerSwipeAdapter.onSwipe(recyclerHolder, direction, dX);
     }
 
     @Override
     public void onChildDrawOver(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        if (null == recyclerSwipeAdapter) {
+            super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            return;
+        }
+        //上层绘制
+        getDefaultUIUtil().onDrawOver(c, recyclerView, checkSwipeViewNotNull(recyclerSwipeAdapter.getSwipeView((RecyclerHolder) viewHolder)), dX, dY, actionState, isCurrentlyActive);
+    }
+
+    /**
+     * 检查滑动视图是否为空
+     *
+     * @param swipeView
+     * @return
+     */
+    private View checkSwipeViewNotNull(View swipeView) {
+        if (null == swipeView) {
+            throw new NullPointerException("swipeView不能为空啊大兄弟！");
+        } else {
+            return swipeView;
+        }
     }
 }

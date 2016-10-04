@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jtech.view.JRecyclerView;
-import com.jtech.view.RecyclerHolder;
 import com.jtech.listener.OnItemClickListener;
 import com.jtech.listener.OnItemLongClickListener;
 import com.jtech.listener.RecyclerDataObserver;
+import com.jtech.view.JRecyclerView;
+import com.jtech.view.RecyclerHolder;
 
 /**
  * 自定义适配器，包裹用户设置的适配器，实现添加足部（加载更多）功能
@@ -22,19 +22,19 @@ public class LoadMoreAdapter extends RecyclerView.Adapter {
     private static final int ITEM_FOOTER = 0x9527;
     private LoadFooterAdapter loadFooterAdapter;
     private RecyclerHolder recyclerHolder;
-    private RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter originAdapter;
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
     private Context context;
     private boolean loadMore;
     private int layoutState;
 
-    public LoadMoreAdapter(Context context, RecyclerView.Adapter adapter, LoadFooterAdapter loadFooterAdapter) {
+    public LoadMoreAdapter(Context context, RecyclerView.Adapter originAdapter, LoadFooterAdapter loadFooterAdapter) {
         this.loadFooterAdapter = loadFooterAdapter;
         this.context = context;
-        this.adapter = adapter;
+        this.originAdapter = originAdapter;
         //注册适配器的数据观察着
-        adapter.registerAdapterDataObserver(new RecyclerDataObserver(this));
+        originAdapter.registerAdapterDataObserver(new RecyclerDataObserver(this));
     }
 
     public void setLoadMore(boolean loadMore) {
@@ -53,6 +53,10 @@ public class LoadMoreAdapter extends RecyclerView.Adapter {
         this.onItemLongClickListener = onItemLongClickListener;
     }
 
+    public RecyclerView.Adapter getOriginAdapter() {
+        return originAdapter;
+    }
+
     /**
      * 是否可以触摸，防止上啦加载，footer影响touch
      *
@@ -65,7 +69,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return adapter.getItemCount() + (loadMore ? 1 : 0);
+        return originAdapter.getItemCount() + (loadMore ? 1 : 0);
     }
 
     @Override
@@ -73,7 +77,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter {
         if (loadMore && position == getItemCount() - 1) {
             return ITEM_FOOTER;
         }
-        return adapter.getItemViewType(position);
+        return originAdapter.getItemViewType(position);
     }
 
     @Override
@@ -88,7 +92,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter {
             }
             return recyclerHolder;
         }
-        return adapter.onCreateViewHolder(parent, viewType);
+        return originAdapter.onCreateViewHolder(parent, viewType);
     }
 
     @Override
@@ -100,7 +104,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter {
             }
         } else {
             //调用适配器的bindview方法
-            adapter.onBindViewHolder(holder, position);
+            originAdapter.onBindViewHolder(holder, position);
             //设置item的点击事件
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
