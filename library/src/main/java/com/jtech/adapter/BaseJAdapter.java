@@ -246,7 +246,7 @@ public abstract class BaseJAdapter<VH extends RecyclerHolder, D> extends Recycle
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return createHolder(LayoutInflater.from(activity), parent, viewType);
+        return createHolder(LayoutInflater.from(null != context ? context : activity), parent, viewType);
     }
 
     /**
