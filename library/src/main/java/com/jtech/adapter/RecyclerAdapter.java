@@ -1,6 +1,7 @@
 package com.jtech.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,13 @@ public abstract class RecyclerAdapter<D> extends BaseJAdapter<RecyclerHolder, D>
      *
      * @param activity Activity对象
      */
+    @Deprecated
     public RecyclerAdapter(Activity activity) {
         super(activity);
+    }
+
+    public RecyclerAdapter(Context context) {
+        super(context);
     }
 
     @Override

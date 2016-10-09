@@ -1,6 +1,7 @@
 package com.jtech.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 
 import com.jtech.view.RecyclerHolder;
@@ -17,8 +18,18 @@ public abstract class RecyclerSwipeAdapter<D> extends RecyclerAdapter<D> {
      *
      * @param activity Activity对象
      */
+    @Deprecated
     public RecyclerSwipeAdapter(Activity activity) {
         super(activity);
+    }
+
+    /**
+     * 主构造
+     *
+     * @param context
+     */
+    public RecyclerSwipeAdapter(Context context) {
+        super(context);
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.jtech.jrecyclerviewlibrary;
 
-import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +14,8 @@ import com.jtech.view.RecyclerHolder;
  * Created by wuxubaiyang on 16/5/9.
  */
 public class TestAdapter extends RecyclerSwipeAdapter<String> {
-    public TestAdapter(Activity activity) {
-        super(activity);
+    public TestAdapter(Context context) {
+        super(context);
     }
 
     /**

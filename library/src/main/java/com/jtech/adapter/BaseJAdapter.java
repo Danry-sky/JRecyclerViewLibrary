@@ -1,6 +1,7 @@
 package com.jtech.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -27,6 +28,10 @@ public abstract class BaseJAdapter<VH extends RecyclerHolder, D> extends Recycle
      */
     private Activity activity;
     /**
+     * context对象
+     */
+    private Context context;
+    /**
      * 数据集合
      */
     private List<D> realDatas;
@@ -52,9 +57,20 @@ public abstract class BaseJAdapter<VH extends RecyclerHolder, D> extends Recycle
      *
      * @param activity Activity对象
      */
+    @Deprecated
     public BaseJAdapter(Activity activity) {
         this.activity = activity;
         //new一个空对象
+        realDatas = new ArrayList<>();
+    }
+
+    /**
+     * 主构造
+     *
+     * @param context
+     */
+    public BaseJAdapter(Context context) {
+        this.context = context;
         realDatas = new ArrayList<>();
     }
 
@@ -63,8 +79,18 @@ public abstract class BaseJAdapter<VH extends RecyclerHolder, D> extends Recycle
      *
      * @return
      */
+    @Deprecated
     public Activity getActivity() {
         return activity;
+    }
+
+    /**
+     * 得到上下文对象
+     *
+     * @return
+     */
+    public Context getContext() {
+        return context;
     }
 
     public void setOnItemTouchToMove(OnItemTouchToMove onItemTouchToMove) {
