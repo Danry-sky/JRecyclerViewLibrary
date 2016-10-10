@@ -158,7 +158,6 @@ public class TestActivity extends Activity implements OnItemClickListener, OnIte
      */
     @Override
     public void onRefresh() {
-//        loadData(false);
-        refreshLayout.refreshingComplete();
+        loadData(false);
     }
 }
