@@ -20,6 +20,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.os.Handler;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.v4.view.MotionEventCompat;
@@ -89,6 +90,8 @@ public class RefreshLayout extends ViewGroup implements NestedScrollingParent, N
 
     private static final int ANIMATE_TO_START_DURATION = 200;
 
+    private static final int REFRESH_FREQUENCY = 800;
+
     // Default background for the progress spinner
     private static final int CIRCLE_BG_LIGHT = 0xFFFAFAFA;
     // Default offset in dips from the top of the view to where the progress
@@ -100,6 +103,7 @@ public class RefreshLayout extends ViewGroup implements NestedScrollingParent, N
     private boolean mRefreshing = false;
     private int mTouchSlop;
     private float mTotalDragDistance = -1;
+    private long refreshTimeMillis;
     // If nested scrolling is enabled, the total amount that needed to be
     // consumed by this as the nested scrolling parent is used in place of the
     // overscroll determined by MOVE events in the onTouch handler
@@ -264,6 +268,15 @@ public class RefreshLayout extends ViewGroup implements NestedScrollingParent, N
     }
 
     /**
+     * 获取下拉刷新的时间戳
+     *
+     * @return
+     */
+    public long getRefreshTimeMillis() {
+        return refreshTimeMillis;
+    }
+
+    /**
      * Simple constructor to use when creating a SwipeRefreshLayout from code.
      *
      * @param context
@@ -364,8 +377,17 @@ public class RefreshLayout extends ViewGroup implements NestedScrollingParent, N
      * 刷新完成
      */
     public void refreshingComplete() {
-        setEnabled(true);
         setRefreshing(false, false /* notify */);
+        if (refreshTimeMillis != 0 && (System.currentTimeMillis() - refreshTimeMillis) > REFRESH_FREQUENCY) {
+            setEnabled(true);
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    setEnabled(true);
+                }
+            }, REFRESH_FREQUENCY - (System.currentTimeMillis() - refreshTimeMillis));
+        }
     }
 
     /**
@@ -435,6 +457,7 @@ public class RefreshLayout extends ViewGroup implements NestedScrollingParent, N
             ensureTarget();
             mRefreshing = refreshing;
             if (mRefreshing) {
+                this.refreshTimeMillis = System.currentTimeMillis();
                 animateOffsetToCorrectPosition(mCurrentTargetOffsetTop, mRefreshListener);
             } else {
                 startScaleDownAnimation(mRefreshListener);
