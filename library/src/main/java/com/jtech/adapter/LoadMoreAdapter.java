@@ -110,7 +110,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     if (null != onItemClickListener) {
-                        onItemClickListener.onItemClick((RecyclerHolder) holder, v, position);
+                        onItemClickListener.onItemClick(holder instanceof RecyclerHolder ? (RecyclerHolder) holder : null, v, position);
                     }
                 }
             });
@@ -119,7 +119,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter {
                 @Override
                 public boolean onLongClick(View v) {
                     if (null != onItemLongClickListener) {
-                        return onItemLongClickListener.onItemLongClick((RecyclerHolder) holder, v, position);
+                        return onItemLongClickListener.onItemLongClick(holder instanceof RecyclerHolder ? (RecyclerHolder) holder : null, v, position);
                     }
                     return false;
                 }
