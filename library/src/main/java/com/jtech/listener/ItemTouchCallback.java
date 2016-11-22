@@ -127,11 +127,11 @@ public class ItemTouchCallback extends ItemTouchHelper.Callback {
         //调用绘制监听
         int direction = 0;
         if (dX > 0) {
-            direction = ItemTouchHelper.START;
-            recyclerSwipeAdapter.onSwipeStart(recyclerHolder, dX);
-        } else if (dX < 0) {
             direction = ItemTouchHelper.END;
             recyclerSwipeAdapter.onSwipeEnd(recyclerHolder, dX);
+        } else if (dX < 0) {
+            direction = ItemTouchHelper.START;
+            recyclerSwipeAdapter.onSwipeStart(recyclerHolder, dX);
         }
         recyclerSwipeAdapter.onSwipe(recyclerHolder, direction, dX);
     }
