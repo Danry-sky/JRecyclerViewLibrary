@@ -244,6 +244,15 @@ public abstract class BaseJAdapter<VH extends RecyclerHolder, D> extends Recycle
         return realDatas;
     }
 
+    /**
+     * 获取真实数据的长度
+     *
+     * @return
+     */
+    public int getRealDatasSize() {
+        return null != getRealDatas() ? getRealDatas().size() : 0;
+    }
+
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
         return createHolder(LayoutInflater.from(null != context ? context : activity), parent, viewType);
@@ -303,7 +312,7 @@ public abstract class BaseJAdapter<VH extends RecyclerHolder, D> extends Recycle
      * @param datas 数据
      */
     public void addDatas(Collection<D> datas) {
-        addDatas(getItemCount(), datas);
+        addDatas(getRealDatasSize(), datas);
     }
 
     /**
