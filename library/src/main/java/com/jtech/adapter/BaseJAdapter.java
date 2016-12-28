@@ -1,6 +1,5 @@
 package com.jtech.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,10 +22,6 @@ import java.util.List;
  * @param <D>  数据类型
  */
 public abstract class BaseJAdapter<VH extends RecyclerHolder, D> extends RecyclerView.Adapter<VH> {
-    /**
-     * Activity对象
-     */
-    private Activity activity;
     /**
      * context对象
      */
@@ -55,33 +50,11 @@ public abstract class BaseJAdapter<VH extends RecyclerHolder, D> extends Recycle
     /**
      * 主构造
      *
-     * @param activity Activity对象
-     */
-    @Deprecated
-    public BaseJAdapter(Activity activity) {
-        this.activity = activity;
-        //new一个空对象
-        realDatas = new ArrayList<>();
-    }
-
-    /**
-     * 主构造
-     *
      * @param context
      */
     public BaseJAdapter(Context context) {
         this.context = context;
         realDatas = new ArrayList<>();
-    }
-
-    /**
-     * 得到Activity对象
-     *
-     * @return
-     */
-    @Deprecated
-    public Activity getActivity() {
-        return activity;
     }
 
     /**
@@ -255,7 +228,7 @@ public abstract class BaseJAdapter<VH extends RecyclerHolder, D> extends Recycle
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return createHolder(LayoutInflater.from(null != context ? context : activity), parent, viewType);
+        return createHolder(LayoutInflater.from(context), parent, viewType);
     }
 
     /**
