@@ -12,10 +12,7 @@ import android.widget.TextView;
  */
 public class RecyclerHolder extends RecyclerView.ViewHolder {
     private final static int MAX_VIEW_INSTANCE = 20;
-    /**
-     * 用于标记是否首次加载
-     */
-    private boolean once = true;
+
     private final SparseArray<View> mViews = new SparseArray<>(MAX_VIEW_INSTANCE);
 
     public RecyclerHolder(View itemView) {
@@ -61,19 +58,6 @@ public class RecyclerHolder extends RecyclerView.ViewHolder {
         TextView view = getView(viewId);
         view.setText(text);
         return this;
-    }
-
-    /**
-     * 是否已加载过
-     *
-     * @return 是否首次加载
-     */
-    public boolean isOnce() {
-        if (once) {
-            once = !once;
-            return !once;
-        }
-        return once;
     }
 
     /**
@@ -180,6 +164,18 @@ public class RecyclerHolder extends RecyclerView.ViewHolder {
     }
 
     /**
+     * 设置长点击事件
+     *
+     * @param viewId
+     * @param onLongClickListener
+     * @return
+     */
+    public RecyclerHolder setLongClickListener(int viewId, View.OnLongClickListener onLongClickListener) {
+        getView(viewId).setOnLongClickListener(onLongClickListener);
+        return this;
+    }
+
+    /**
      * 设置是否可用
      *
      * @param viewId
@@ -188,6 +184,18 @@ public class RecyclerHolder extends RecyclerView.ViewHolder {
      */
     public RecyclerHolder setEnabled(int viewId, boolean enabled) {
         getView(viewId).setEnabled(enabled);
+        return this;
+    }
+
+    /**
+     * 设置选择状态
+     *
+     * @param viewId
+     * @param selected
+     * @return
+     */
+    public RecyclerHolder setSelected(int viewId, boolean selected) {
+        getView(viewId).setSelected(selected);
         return this;
     }
 
