@@ -152,3 +152,107 @@ jRecyclerView.setOnItemViewSwipeListener(onItemViewSwipeListener);
 ```java
 jRecyclerView.startSwipe(viewHolder);
 ```
+#适配器的食用方法（重点来了！）
+目前有三种列表适配器加一个footer的适配器供各位使用，分别是
+```java
+//这是基础适配器，所有的方法都在里面，用户可以使用自定义的viewholder，并不局限于recyclerholder
+BaseJAdapter.class
+//一般情况下都会使用这个方法，相比于基础适配器，它更简单
+RecyclerAdapter.class
+//为了扩展swip动作而专门搞得一个适配器，足以应对swip动作的所有需求，当然，只在jrecyclerview中生效，不通用
+RecyclerSwipeAdapter.class
+```
+#BaseJAdapter
+```java
+    //第一个参数是viewholder，第二个是参数类型，列表中需要展示的数据类型，不是集合！不是集合！不是集合！
+    //如果列表并不是一个完整的集合，也可以随便填个类型
+    class TestAdapter extends BaseJAdapter<TestAdapter.ViewHolder,String>{
+        public TestAdapter(Context context) {
+            super(context);
+    	}
+        @Override
+        public ViewHolder createHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+            //在这里创建holder，与基础的适配器无异
+            return null;
+        }
+
+        @Override
+        public void convert(ViewHolder holder, int viewType, int position) {
+            //在这里convert，与基础的适配器无异
+        }
+        //same
+        class ViewHolder extends RecyclerView.ViewHolder{
+            public ViewHolder(View itemView) {
+                super(itemView);
+            }
+        }
+    }
+```
+#RecyclerAdapter
+```java
+    //常用方法，viewholder使用的是recyclerholder，下面会有详解,泛型依然需要填入一个列表的参数类型，不是集合！不是集合！不是集合！
+    class TestAdapter extends RecyclerAdapter<String> {
+        public TestAdapter(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected View createView(LayoutInflater layoutInflater, ViewGroup viewGroup, int viewType) {
+            //创建视图，直接通过layoutinflater创建视图即可
+            return null;
+        }
+
+        @Override
+        protected void convert(RecyclerHolder holder, String model, int position) {
+            //convert数据，就是辣么简单
+        }
+    }
+```
+#RecyclerSwipeAdapter
+```java
+    //为swipe定制的方法，可以实现分层滑动,泛型依然需要填入一个列表的参数类型，不是集合！不是集合！不是集合！
+    class TestAdapter extends RecyclerSwipeAdapter<String> {
+        public TestAdapter(Context context) {
+            super(context);
+        }
+
+        @Override
+        public void clearView(RecyclerHolder recyclerHolder) {
+            //在这里，需要通过recyclerholder还原滑动状态
+        }
+
+        @Override
+        public View getSwipeView(RecyclerHolder recyclerHolder) {
+            //获取需要滑动的视图，可以分为多层，比如上层滑动，下层显示颜色或者图标,这里只需要返回需要滑动的视图即可，必须返回
+            return null;
+        }
+
+        @Override
+        public void onSwipe(RecyclerHolder recyclerHolder, int direction, float dx) {
+            //滑动中状态，可以执行自定义操作
+        }
+
+        @Override
+        public void onSwipeStart(RecyclerHolder recyclerHolder, float dx) {
+            //并非抽象方法，需要功能细分的可以重写
+            //对应前边的swip动作设置
+        }
+
+        @Override
+        public void onSwipeEnd(RecyclerHolder recyclerHolder, float dx) {
+            //并非抽象方法，需要功能细分的可以重写
+            //对应前边的swip动作设置
+        }
+
+        @Override
+        protected View createView(LayoutInflater layoutInflater, ViewGroup viewGroup, int viewType) {
+            //创建视图，直接通过layoutinflater创建视图即可
+            return null;
+        }
+
+        @Override
+        protected void convert(RecyclerHolder holder, String model, int position) {
+            //convert数据，就是辣么简单
+        }
+    }
+```
