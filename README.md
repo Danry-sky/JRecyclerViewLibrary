@@ -95,8 +95,8 @@ public class SimpleLoadFooterAdapter extends LoadFooterAdapter {
     }
 }
 ```
-#item点击事件（item中无拦截的时候生效）
-与listview的使用方法相同，只是返回的参数不同了
+#item点击事件
+item中无拦截的时候生效,与listview的使用方法相同，只是返回的参数不同
 ```java
 jRecyclerView.setOnItemClickListener(new OnItemClickListener() {
     @Override
@@ -105,7 +105,8 @@ jRecyclerView.setOnItemClickListener(new OnItemClickListener() {
     }
 });
 ```
-#item长点击事件(item中无拦截的时候生效，不过与下面要说的长点击拖动换位功能可能会出现冲突，需要自己抉择)
+#item长点击事件
+item中无拦截的时候生效，不过与下面要说的长点击拖动换位功能可能会出现冲突，需要自己抉择
 ```java
 jRecyclerView.setOnItemLongClickListener(new OnItemLongClickListener() {
     @Override
@@ -255,4 +256,39 @@ RecyclerSwipeAdapter.class
             //convert数据，就是辣么简单
         }
     }
+```
+#RecyclerHolder
+这里的概念部分借鉴了另一个项目，叫啥我忘了，不过扩展了很多，并且完美的集成进了JRecyclerView
+```java
+    //在convert可以更简单的填充数据，而不需要事先定义viewholder
+    @Override
+    protected void convert(RecyclerHolder holder, String model, int position) {
+        //设置文本
+        holder.setText(R.id.textview, model);
+        //获取一个视图，无需强转
+        TextView textView = holder.getView(R.id.textview);
+        //设置点击事件
+        holder.setClickListener(R.id.textview, onClickListener);
+        //设置enable
+        holder.setEnabled(R.id.textview, enabled);
+        //设置是否可视
+        holder.setViewVisible(R.id.textview, isVisible);
+        //当然了，还有很多的实现没有列出来，类似的实现也可以无限的举例，
+        // 不过并不会搞非常多非常全的实现，只会做基础以及常用的实现，各位有什么更好的想法可以留言给我，增减皆可
+    }
+```
+#适配器的数据操作
+在实际开发中，一定会操作列表数据的增删改，每次都去写简直不可饶恕
+```java
+//添加数据，并不是只有一个方法，还可以插入指定位置
+testAdapter.addData(data);
+//也可以添加一个集合，以及添加到指定位置
+testAdapter.addDatas(datas);
+//移除一条数据
+testAdapter.removeData(position);
+//更新一条数据
+testAdapter.updataItem(position, data);
+//将一条数据从一个位置移动到另一个位置，用在拖动换位，简直逆天的方便，有木有？
+testAdapter.moveData(fromPosition,toPosition);
+//上述的所有操作都已经调用了notify，是按照不同功能调用的不同notify，不用担心动画的问题
 ```
