@@ -105,7 +105,7 @@ jRecyclerView.setOnItemClickListener(new OnItemClickListener() {
     }
 });
 ```
-##item长点击事件(item中无拦截的时候生效，不过与下面要说的长点击拖动换位功能可能会出现冲突，需要用户自己抉择)
+##item长点击事件(item中无拦截的时候生效，不过与下面要说的长点击拖动换位功能可能会出现冲突，需要自己抉择)
 ```java
 jRecyclerView.setOnItemLongClickListener(new OnItemLongClickListener() {
     @Override
