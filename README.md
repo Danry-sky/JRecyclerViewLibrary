@@ -30,9 +30,9 @@ step2：在项目中加入
             android:layout_height="match_parent" />
     </com.jtech.view.RefreshLayout>
 ```
-##下拉刷新
+#下拉刷新
 copy了官方的SwipeRefreshLayout代码修复了其中的bug（官方代码中出现的重复下拉的bug已经修复，并不会出现）并且加入了新的功能
-###主动发起下拉刷新并设置监听
+#主动发起下拉刷新并设置监听
 ```java
 refreshLayout.startRefreshing();
 refreshLayout.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
@@ -42,13 +42,13 @@ refreshLayout.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
             }
         });
 ```
-###刷新完成时调用的状态还原方法
+#刷新完成时调用的状态还原方法
 ```java
 refreshLayout.refreshingComplete();
 ```
-##滑动到底部加载更多
+#滑动到底部加载更多
 该方法通过嵌套适配器的方式实现了一个footer，通用于三种布局，并且footer可以实现自定义效果
-###开启加载更多并且设置监听
+#开启加载更多并且设置监听
 ```java
 jRecyclerView.setLoadMore(true);
 jRecyclerView.setOnLoadListener(new OnLoadListener() {
@@ -58,13 +58,13 @@ jRecyclerView.setOnLoadListener(new OnLoadListener() {
             }
         });
 ```
-###自定义footer
+#自定义footer
 自定义footer需要在设置适配器的同时传递进去，通过适配器的方式完成(simpleloadfooteradapter是默认的footer适配器实现，不传递的时候就会调用他)
 ```java
 SimpleLoadFooterAdapter simpleLoadFooterAdapter = new SimpleLoadFooterAdapter(context);
 jRecyclerView.setAdapter(testAdapter, simpleLoadFooterAdapter);
 ```
-###自定义footer适配器实现，继承自LoadFooterAdapter
+#自定义footer适配器实现，继承自LoadFooterAdapter
 ```java
 public class SimpleLoadFooterAdapter extends LoadFooterAdapter {
     
@@ -95,7 +95,7 @@ public class SimpleLoadFooterAdapter extends LoadFooterAdapter {
     }
 }
 ```
-##item点击事件（item中无拦截的时候生效）
+#item点击事件（item中无拦截的时候生效）
 与listview的使用方法相同，只是返回的参数不同了
 ```java
 jRecyclerView.setOnItemClickListener(new OnItemClickListener() {
@@ -105,7 +105,7 @@ jRecyclerView.setOnItemClickListener(new OnItemClickListener() {
     }
 });
 ```
-##item长点击事件(item中无拦截的时候生效，不过与下面要说的长点击拖动换位功能可能会出现冲突，需要自己抉择)
+#item长点击事件(item中无拦截的时候生效，不过与下面要说的长点击拖动换位功能可能会出现冲突，需要自己抉择)
 ```java
 jRecyclerView.setOnItemLongClickListener(new OnItemLongClickListener() {
     @Override
@@ -114,7 +114,7 @@ jRecyclerView.setOnItemLongClickListener(new OnItemLongClickListener() {
     }
 });
 ```
-##长点击拖动或者拖动换位
+#长点击拖动或者拖动换位
 ```java
 //longPressDragEnabled为是否开启长点击拖动换位，也可以用户手动触发该功能；dragFlags为动作标记，onItemViewMoveListener为监听
 //最底层的拖动方法，一般情况下可以不使用
@@ -128,12 +128,12 @@ jRecyclerView.setMoveUpDown(longPressDragEnabled, onItemViewMoveListener);
 //也可以单独设置监听,上面几个方法可以传null
 jRecyclerView.setOnItemViewMoveListener(onItemViewMoveListener);
 ```
-###手动触发拖动监听事件
+#手动触发拖动监听事件
 比如点击item中的某个图标实现拖动换位的功能,需要传递当前item的viewholder
 ```java
 jRecyclerView.startDrag(viewHolder);
 ```
-##滑动删除或归档
+#滑动删除或归档
 ```java
 //swipeEnabled为是否开启滑动，也可以用户手动触发该功能；swipeFlags为动作标记，onItemViewSwipeListener为监听
 //最底层的滑动方法，一般情况下可以不使用
@@ -147,7 +147,7 @@ jRecyclerView.setSwipeEnd(swipeEnabled,onItemViewSwipeListener);
 //依然可以单独设置监听,上面方法设置为null
 jRecyclerView.setOnItemViewSwipeListener(onItemViewSwipeListener);
 ```
-###手动触发滑动
+#手动触发滑动
 并不知道为什么要搞这个功能，可能是为了对称？至少我是没发现使用场景
 ```java
 jRecyclerView.startSwipe(viewHolder);
